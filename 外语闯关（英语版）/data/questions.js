@@ -1,0 +1,863 @@
+/* 英语情境闯关 · 题库（自动生成，勿手改） */
+window.QUESTIONS = [
+  {
+    id: "coffee_dp1",
+    scene: "coffee",
+    step: 1,
+    focus: "店员问你要什么 | 考点：点单请求句式",
+    npc: "Hi there! What can I get started for you?",
+    options: ["Could I get a large iced latte, please?", "Actually, do you sell any pastries?", "Actually, could I get that hot instead?", "Sorry, I need to check my schedule first."],
+    answer: 0,
+    explain: "正确项用 `Could I get…please` 完成点单，是咖啡店最地道的说法。`sell any pastries`转移到了另一件事上——店员要你说的是「要什么」，不是反问店里有什么甜点。`get that hot instead`改了需求（要热的），没有完成点单。`need to check my schedule first`说的是自己的安排，完全没有点单。"
+  },
+  {
+    id: "coffee_dp2",
+    scene: "coffee",
+    step: 2,
+    focus: "冷热选择 | 考点：省略与礼貌副词",
+    npc: "Would you like that hot or iced?",
+    options: ["Is the iced one stronger?", "Actually, make it a double.", "Iced, please.", "Cold one, thanks."],
+    answer: 2,
+    explain: "正确项是服务业的标准省略说法——只说名词加 `please` 就够了。`the iced one stronger`改了规格（要双份），不是回答冷热。`make it a double`的 `cold` 泛指「冷的」，而热饮是 `hot`、冰饮才是 `iced`，店员可能听不懂。`Cold one, thanks`问了另一个问题，没有回答冷热。"
+  },
+  {
+    id: "coffee_dp3",
+    scene: "coffee",
+    step: 3,
+    focus: "换一种奶 | 考点：否定 + 替代提议",
+    npc: "Would you like oat milk in that?",
+    options: ["Yes, put the oat milk in.", "No, regular milk is fine, thanks.", "Actually, could I get that as a tea instead?", "Oat is good, thank you."],
+    answer: 1,
+    explain: "正确项先否定、再给替代、最后致谢，三步齐全，是最完整的回应。`put the oat milk in`方向相反——你其实不想要燕麦奶。`get that as a tea instead`改成了完全不同的饮品。`Oat is good, thank you`语义含糊，听不出是同意还是拒绝。"
+  },
+  {
+    id: "coffee_dp4",
+    scene: "coffee",
+    step: 4,
+    focus: "缺货时改选 | 考点：询问替代品",
+    npc: "I'm sorry, we're out of oat milk today. Would you like whole or skim?",
+    options: ["Do you have any other kinds of milk?", "Actually, I'll have it black, no milk.", "Whatever you have is fine.", "Whole milk, please."],
+    answer: 3,
+    explain: "正确项直接给出选择并加 `please`，店员不用再追问。`have any other kinds of milk`问了另一个问题，没有做出选择。`I'll have it black, no milk`把需求整个改掉了（改成黑咖啡）。`Whatever you have is fine`回避选择——在缺货已经发生、需要明确选项的时候说这个，等于把选择推回给店员。"
+  },
+  {
+    id: "coffee_dp5",
+    scene: "coffee",
+    step: 5,
+    focus: "要收据 | 考点：礼貌索取",
+    npc: "That'll be $5.40. Would you like a receipt?",
+    options: ["Yes, could I have a receipt, please?", "No, thank you — I've got my card statement.", "Could I get one of those stamps instead?", "Could you reply me a receipt?"],
+    answer: 0,
+    explain: "正确项用 `could I have` 请求，是索取类动作的标准句式。`thank you — I've got my card statement`拒绝了——但你需要收据做报销或保修。`get one of those stamps instead`问了完全不相干的东西。`reply me a receipt`是搭配错误：`reply` 不能接人作宾语（`reply me` 是中文母语者高频错误），英语要说 `reply to me` 或换 `give me`。"
+  },
+  {
+    id: "coffee_dp6",
+    scene: "coffee",
+    step: 6,
+    focus: "付款方式 | 考点：介词短语与请托",
+    npc: "You can pay by card or cash. How would you like to pay?",
+    options: ["Is there a card fee?", "Could you just charge it to my card instead?", "By card, please.", "Use my card."],
+    answer: 2,
+    explain: "正确项用 `by card` 这个介词短语表示支付方式，最简洁得体。`a card fee`问了费用而不是回答问题。`just charge it to my card instead`把说法改成「记我卡上」，改变了含义。`Use my card`是祈使命令——在收银台对店员说 `Use my card` 相当不礼貌。"
+  },
+  {
+    id: "coffee_dp7",
+    scene: "coffee",
+    step: 7,
+    focus: "要袋子 | 考点：接受与致谢",
+    npc: "Would you like a bag for that?",
+    options: ["No, I'll carry it carefully.", "Yes, a bag would be great, thanks.", "What kind of bags do you have?", "Yes bag."],
+    answer: 1,
+    explain: "正确项完整自然，致谢到位。`I'll carry it carefully`没必要拒绝——店员在提供便利。`kind of bags do you have`问了店员已经回答过的问题。`bag`缺冠词（英语单数可数名词一般不能裸用），句子读起来断裂。"
+  },
+  {
+    id: "coffee_dp8",
+    scene: "coffee",
+    step: 8,
+    focus: "道别 | 考点：回应祝福",
+    npc: "Enjoy your latte! Have a good day.",
+    options: ["Yes, I enjoy my latte very much.", "Could I have another one for the road?", "Sorry, I was in a hurry this morning.", "Thanks, you too. Have a great day!"],
+    answer: 3,
+    explain: "正确项用 `you too` 回应对方的祝愿，是英语道别的固定动作。`enjoy my latte very much`只是附和，没接住祝愿。`have another one for the road`又要了一杯，把道别变成新任务。`was in a hurry this morning`说了句无关的话，也没回应祝愿。"
+  },
+  {
+    id: "restaurant_dp1",
+    scene: "restaurant",
+    step: 1,
+    focus: "点前菜 | 考点：Could we 请求句式",
+    npc: "Good evening. Are you ready to order?",
+    options: ["Could we start with the soup to share, please?", "Are there any specials today?", "I'll have whatever is quickest.", "We'd like the soup to start, please."],
+    answer: 0,
+    explain: "正确项用 `Could we…please` 提请求，`to share` 顺带说明意图，是餐厅点前菜的完整说法。`any specials today`问了另一个问题，没有点单。`I'll have whatever is quickest`把选择权交给餐厅，不算真正点单。`We'd like the soup to start, please`语法没错，但没有 `Could`，在服务场景里显得生硬。"
+  },
+  {
+    id: "restaurant_dp2",
+    scene: "restaurant",
+    step: 2,
+    focus: "请对方推荐 | 考点：征询建议",
+    npc: "Our chef's specialty tonight is the grilled sea bass.",
+    options: ["Is the sea bass quite spicy?", "I'll just order the sea bass then.", "That sounds good — what would you recommend?", "Our options for the fish are quite limited."],
+    answer: 2,
+    explain: "正确项先接住对方的话（`That sounds good`），再用 `what would you recommend` 征询建议，是英语餐厅里的自然推进方式。`the sea bass quite spicy`问了菜的口味，不是征求推荐。`I'll just order the sea bass then`直接定了，没利用推荐机会。`Our options for the fish are quite limited`是公文腔，不像在点菜时说的话。"
+  },
+  {
+    id: "restaurant_dp3",
+    scene: "restaurant",
+    step: 3,
+    focus: "点主菜 | 考点：点菜固定表达",
+    npc: "And for your main course?",
+    options: ["What's the difference between the salmon and the steak?", "I'll have the grilled salmon, please.", "Could I have the salmon without the sauce?", "Give me grilled salmon."],
+    answer: 1,
+    explain: "正确项用 `I'll have the…`——英式/澳式餐厅点主菜的标准说法，礼貌自然。`What's the difference between the salmon and the`问了对比而不是点单。`have the salmon without the sauce`提出了额外要求，但主菜还没点定。`Give me grilled salmon`是祈使命令，很冲。"
+  },
+  {
+    id: "restaurant_dp4",
+    scene: "restaurant",
+    step: 4,
+    focus: "询问过敏与食材 | 考点：提出健康相关询问",
+    npc: "Before I bring that over — do you have any allergies?",
+    options: ["Is the sauce made with peanuts?", "Actually, I'll have the salad instead.", "I'm allergic to nuts and shellfish.", "Yes — I'm allergic to peanuts. Could you make sure the sauce has none?"],
+    answer: 3,
+    explain: "正确项明确说出过敏原、再提具体请求——这是真实场景里必须说清的两件事。`the sauce made with peanuts`问了配料，虽然有用但没表明自己的过敏情况。`I'll have the salad instead`回避了问题（改成沙拉）。`I'm allergic to nuts and shellfish`只列了过敏原，没有请求厨房确认，风险更大。"
+  },
+  {
+    id: "restaurant_dp5",
+    scene: "restaurant",
+    step: 5,
+    focus: "餐中请求 | 考点：提出请求",
+    npc: "How is everything tasting so far?",
+    options: ["It's lovely, thank you. Could we have some more bread, please?", "Is everything all right with the kitchen?", "Actually, this isn't quite what I ordered.", "I'm afraid the soup was rather disappointing."],
+    answer: 0,
+    explain: "正确项先回应对方的问题、再提请求，节奏完整。`everything all right with the kitchen`问了另一个问题。`this isn't quite what I ordered`提出了问题但没说要什么。`I'm afraid the soup was rather disappointing`是抱怨，没推进任务——而且如果真不满意，应该更直接地提出要换菜。"
+  },
+  {
+    id: "restaurant_dp6",
+    scene: "restaurant",
+    step: 6,
+    focus: "结账分单 | 考点：礼貌提出分账",
+    npc: "Would you like to settle the bill now?",
+    options: ["Can we pay separately?", "Actually, is it possible to move this to a table for four?", "Could we have the bill, and could you split it for us, please?", "What time is your kitchen closing?"],
+    answer: 2,
+    explain: "正确项用两个 `could` 提请求，并说清「分单」的具体诉求，是真实场景需要的完整表达。`pay separately`太简略，没说清怎么分。`possible to move this to a table for`提出了完全不同的要求。`time is your kitchen closing`问了不相关的问题。"
+  },
+  {
+    id: "restaurant_dp7",
+    scene: "restaurant",
+    step: 7,
+    focus: "账单有误 | 考点：礼貌指出问题",
+    npc: "Here you are — that's $86 including the bottle of wine.",
+    options: ["Could you make it eighty-six, please?", "I'm sorry, I think there's a mistake — we didn't order the wine.", "Is there a bottle of water included in that too?", "Who ordered the wine?"],
+    answer: 1,
+    explain: "正确项先致歉缓冲、再陈述事实，是服务场景指出问题的标准结构。`make it eighty-six, please`试图直接改金额。`a bottle of water included in that too`问了另一笔账。`Who ordered the wine`把责任推给不在场的同事。"
+  },
+  {
+    id: "restaurant_dp8",
+    scene: "restaurant",
+    step: 8,
+    focus: "离店 | 考点：致谢与道别",
+    npc: "Thank you, and we hope you enjoyed your evening.",
+    options: ["Yes, the food was lovely. What is your name again?", "Could we book a table for next Thursday?", "We're sorry, we couldn't quite finish the wine.", "Thank you, we enjoyed it very much. Have a good evening!"],
+    answer: 3,
+    explain: "正确项完整呼应对方的祝愿。`the food was lovely. What is your name`问了服务员姓名，很突兀。`book a table for next Thursday`顺势订下次，是真实但跑偏的回应（此刻任务是结账离店）。`We're sorry, we couldn't quite finish the wine`说了句无关且略带暗示的话。"
+  },
+  {
+    id: "hotel_dp1",
+    scene: "hotel",
+    step: 1,
+    focus: "报预订 | 考点：under + 姓氏",
+    npc: "Good evening. Do you have a reservation with us?",
+    options: ["Yes, I have a reservation under the name Chen.", "What time is your check-in?", "I need a room for two nights, I think.", "Please give me a room with a booking."],
+    answer: 0,
+    explain: "正确项用 `under the name + 姓`——酒店预订的标准说法。`time is your check-in`问了另一个问题。`need a room for two nights, I think`没有提供姓名，等于没说清自己是谁。`give me a room with a booking`是搭配错误，`give me a room with a booking` 说不通。"
+  },
+  {
+    id: "hotel_dp2",
+    scene: "hotel",
+    step: 2,
+    focus: "核对日期 | 考点：确认信息",
+    npc: "That's for three nights. Just to confirm, checking out on Friday?",
+    options: ["Sorry, could you repeat that?", "Actually, I'd like to change it to Saturday.", "That's right — check-out on Friday the 14th.", "Yes yes, Friday, correct."],
+    answer: 2,
+    explain: "正确项用 `That's right` 确认、并补上具体日期，信息完整——核对日期时最好复述一遍，避免出错。`repeat that`请对方重复，没给到确认。`I'd like to change it to Saturday`直接改期，但此刻应该先确认。`Friday, correct`是口语化的重复强调，信息量低。"
+  },
+  {
+    id: "hotel_dp3",
+    scene: "hotel",
+    step: 3,
+    focus: "提出房间要求 | 考点：礼貌提出要求",
+    npc: "The room is a standard double on the third floor.",
+    options: ["Is the elevator working properly?", "Could I have a room away from the elevator, please?", "Could you put us on a higher floor instead?", "Actually, could you move us to a different room?"],
+    answer: 1,
+    explain: "正确项用 `Could I have…please` 请求最得体，且带上了 `the elevator`（电梯是特指，要用 the）。`the elevator working properly`问了电梯状况，不是我们要的。`put us on a higher floor instead`提的也是楼层，不是噪音。`move us to a different room`提的也是楼层，没准确表达「离电梯远一点」。"
+  },
+  {
+    id: "hotel_dp4",
+    scene: "hotel",
+    step: 4,
+    focus: "报告房间问题 | 考点：描述故障",
+    npc: "Is everything alright in the room?",
+    options: ["Could you send someone up right away?", "Actually, could you move us to a different room?", "The air conditioning is not working.", "I'm afraid the air conditioning isn't working — could someone take a look?"],
+    answer: 3,
+    explain: "正确项用 `I'm afraid` 缓冲、完整描述故障、再提具体请求，是服务场景升级问题的标准路径。`send someone up right away`直接下指令，缺少铺垫。`move us to a different room`提出了解决方案，但没说明问题是什么。`The air conditioning is not working`只陈述不求助。"
+  },
+  {
+    id: "hotel_dp5",
+    scene: "hotel",
+    step: 5,
+    focus: "询问升级 | 考点：询问可能性",
+    npc: "I do have a suite available tonight with a harbour view.",
+    options: ["Oh, that sounds lovely — is there any chance of an upgrade?", "How much is the suite per night?", "No, I'd rather stay in the double.", "Please give me the suite with the harbour view."],
+    answer: 0,
+    explain: "正确项先表达兴趣、再用 `is there any chance of` 礼貌询问，是最自然的升级话术。`How much is the suite per night`问了价格，偏离了当前诉求。`I'd rather stay in the double`拒绝了升级，错过了机会。`give me the suite with the harbour view`是祈使命令，直接要东西显得生硬。"
+  },
+  {
+    id: "hotel_dp6",
+    scene: "hotel",
+    step: 6,
+    focus: "询问设施 | 考点：询问时间与信息",
+    npc: "Anything else I can help you with?",
+    options: ["Could you send someone up with an extra towel?", "Is there a gym in the hotel?", "Could you tell me what time breakfast starts, and how to get the Wi-Fi password?", "I need to know the breakfast time and the Wi-Fi password."],
+    answer: 2,
+    explain: "正确项用 `Could you tell me` 提问，礼貌且完整，一次问清两件事。`send someone up with an extra towel`提了另一个需求，不是我们要问的。`a gym in the hotel`问了设施，不是我们要问的。`need to know the breakfast time and the`虽然信息齐全，但像在给店员下指令，母语者不会这样说。"
+  },
+  {
+    id: "hotel_dp7",
+    scene: "hotel",
+    step: 7,
+    focus: "延迟退房 | 考点：提出例外请求",
+    npc: "Standard check-out is 11 a.m.",
+    options: ["Could you send a car for me at 11?", "Would it be possible to check out at 2 p.m. instead?", "Actually, I'd like to keep the room for another night.", "Give me late checkout at 2 p.m., please."],
+    answer: 1,
+    explain: "正确项 `Would it be possible to…instead` 是请求例外最客气的句式，`instead` 点明是偏离标准做法。`send a car for me at 11`问了接送服务。`I'd like to keep the room for another`提出了续住而非延迟退房。`Give me late checkout at 2 p.m., please`是祈使命令，很生硬。"
+  },
+  {
+    id: "hotel_dp8",
+    scene: "hotel",
+    step: 8,
+    focus: "离店 | 考点：致谢",
+    npc: "Enjoy your stay. We hope to see you again.",
+    options: ["Could I book the same room for next month?", "Could you write down my phone number for the receipt?", "The room was nice, but the WiFi was slow.", "Thank you, we enjoyed our stay. See you next time!"],
+    answer: 3,
+    explain: "正确项完整呼应。`book the same room for next month`问了另一件事。`write down my phone number for the receipt`顺势订下次，真实但跑偏（此刻任务是道别）。`The room was nice, but the WiFi was`说了句带评价的话，没接住 `See you again` 的祝愿。"
+  },
+  {
+    id: "airport_dp1",
+    scene: "airport",
+    step: 1,
+    focus: "出示证件 | 考点：出示与指路",
+    npc: "May I see your passport and booking reference?",
+    options: ["Certainly — here you are.", "Could you tell me which terminal this is?", "Actually, I'm going to a different airline today.", "My passport is here, and the reference is on my phone."],
+    answer: 0,
+    explain: "正确项 `Certainly — here you are.` 是出示物品的标准应答，简洁自然。`tell me which terminal this is`问了别的。`I'm going to a different airline today`说明改了行程，反而让对方困惑。`My passport is here, and the reference is`只说了一半（其中一样没说清在哪）。"
+  },
+  {
+    id: "airport_dp2",
+    scene: "airport",
+    step: 2,
+    focus: "托运行李 | 考点：数量与物品申报",
+    npc: "How many bags are you checking in?",
+    options: ["Is there a weight limit on the bags?", "Actually, could I check just the backpack?", "Two bags — one suitcase and one backpack.", "I want to check two bags, please."],
+    answer: 2,
+    explain: "正确项先给数量再补明细，与问题完全对应。`a weight limit on the bags`问了限制。`check just the backpack`改成了只托运一个。`want to check two bags, please`语法没错但缺明细，柜台还得再问一次。"
+  },
+  {
+    id: "airport_dp3",
+    scene: "airport",
+    step: 3,
+    focus: "特殊需求 | 考点：提出特殊协助请求",
+    npc: "Would you like a window or an aisle seat?",
+    options: ["Is there a special seat for families?", "Could I have an aisle seat, please? My wife needs to get up easily.", "Actually, could you put us near the front?", "Aisle seat is good, thanks."],
+    answer: 1,
+    explain: "正确项请求 + 理由，是真实场景里最完整的表达——乘务员据此安排座位更准确。`a special seat for families`问了另一个问题。`put us near the front`提的是位置而非需求。`Aisle seat is good, thanks`缺冠词，句子不完整。"
+  },
+  {
+    id: "airport_dp4",
+    scene: "airport",
+    step: 4,
+    focus: "液体申报 | 考点：海关申报",
+    npc: "Do you have any liquids in your bag?",
+    options: ["Is there a duty-free shop after security?", "Actually, I could empty the bottle before I queue.", "I have some liquids, but nothing much.", "I have a bottle of water over 100ml and a small bottle of hand sanitizer."],
+    answer: 3,
+    explain: "正确项如实、具体报出容量——超过 100ml 主动申报是合规做法，也是海关真正需要的信息。`a duty-free shop after security`问了商店。`empty the bottle before I queue`提出了补救但还没申报。`have some liquids, but nothing much`说得含糊，海关无法判断。"
+  },
+  {
+    id: "airport_dp5",
+    scene: "airport",
+    step: 5,
+    focus: "中转询问 | 考点：确认中转时间",
+    npc: "You're connecting to Frankfurt today, is that right?",
+    options: ["Yes, that's right. How long do I have for the connection?", "Is Frankfurt in the same terminal?", "Actually, could I go straight to the gate?", "Yes, correct, connecting."],
+    answer: 0,
+    explain: "正确项确认后追问可用时间——转机场景里这是最该问的问题，直接决定要不要买行李直挂。`Frankfurt in the same terminal`问了另一个问题。`go straight to the gate`提了不同诉求。`correct, connecting`只确认没推进——转机时最该问的是可用时间。"
+  },
+  {
+    id: "airport_dp6",
+    scene: "airport",
+    step: 6,
+    focus: "登机口变更 | 考点：询问变更信息",
+    npc: "Your gate has been changed to Gate 34.",
+    options: ["Could you check whether the flight is delayed too?", "Actually, could you move me to an earlier flight?", "Thanks for letting me know — is Gate 34 far from here?", "Thanks for letting me know about the gate."],
+    answer: 2,
+    explain: "正确项先致谢再追问，信息衔接自然。`check whether the flight is delayed too`问了另一个问题。`move me to an earlier flight`提出了不同的诉求。`Thanks for letting me know about the gate`只致谢没推进——虽然礼貌，但没拿到真正需要的信息。"
+  },
+  {
+    id: "airport_dp7",
+    scene: "airport",
+    step: 7,
+    focus: "行李直挂 | 考点：确认托运安排",
+    npc: "Your connecting flight departs at 15:20. Would you like to collect your bag at Frankfurt?",
+    options: ["How long does it take to get to baggage claim?", "No, please check it through to my final destination — I'll collect it there.", "Actually, could you check it to my final destination instead?", "Yes, I'll take my bag at Frankfurt."],
+    answer: 1,
+    explain: "正确项完整说明「直挂到最终目的地、到那边取」，是转机行李的标准表达。`How long does it take to get to`问了另一个问题。`check it to my final destination instead`语法没错但用了祈使式，缺 `please` 显得生硬。`I'll take my bag at Frankfurt`与目标相反。"
+  },
+  {
+    id: "airport_dp8",
+    scene: "airport",
+    step: 8,
+    focus: "登机致谢 | 考点：致谢",
+    npc: "You're all set for boarding. Have a good flight.",
+    options: ["Could you check my luggage one more time?", "I hope the delay doesn't get any worse.", "Thanks for letting me know about the gate change.", "Thank you for all your help. Have a good flight too!"],
+    answer: 3,
+    explain: "正确项完整自然，且 `for all your help` 点出了对方做了什么。`check my luggage one more time`提出了新的请求。`hope the delay doesn't get any worse`说了句无关的话。`Thanks for letting me know about the gate`只回应了登机口变更，没接住 `Have a good flight` 的祝愿。"
+  },
+  {
+    id: "subway_dp1",
+    scene: "subway",
+    step: 1,
+    focus: "向路人问路 | 考点：问路句式",
+    npc: "Excuse me, you look a bit lost. Can I help?",
+    options: ["Yes, actually — how do I get to the National Museum?", "Could you tell me what time the trains run until?", "Actually, I think I'm in the wrong station entirely.", "Yes. Museum where I go?"],
+    answer: 0,
+    explain: "正确项先接受帮助、再用 `how do I get to` 问路，最自然。`tell me what time the trains run until`问了另一个问题。`think I'm in the wrong station entirely`说了个模糊的困境，没问路。`Yes. Museum where I go`语序散乱，不像能问出答案。"
+  },
+  {
+    id: "subway_dp2",
+    scene: "subway",
+    step: 2,
+    focus: "没听清 | 考点：请求重复",
+    npc: "Take the green line for three stops, then change to the red line.",
+    options: ["Is the green line usually busier at this time?", "Actually, is there a bus that goes straight there?", "Sorry, could you say that again more slowly?", "Sorry what? Say again please."],
+    answer: 2,
+    explain: "正确项礼貌请求放慢速度，是真实场景里唯一可用的表达——尤其对方说的是站名和线路名时。`the green line usually busier at this time`问了客流。`a bus that goes straight there`提了不同的方案。`what? Say again please`语气生硬，像在命令对方。"
+  },
+  {
+    id: "subway_dp3",
+    scene: "subway",
+    step: 3,
+    focus: "确认路线 | 考点：确认理解",
+    npc: "That's right — three stops on the green line.",
+    options: ["Which exit should I use for the museum?", "So green line for three stops, then change to the red line — that's right?", "Actually, would the walk be quicker than the train?", "Yes, correct, three stops."],
+    answer: 1,
+    explain: "正确项用「复述 + 升调确认」双重保险，是最稳的确认方式——地铁换乘复述错一个站名就要多坐两站。`Which exit should I use for the museum`问了另一个问题。`the walk be quicker than the train`提了不同方案。`correct, three stops`只确认没复述关键信息。"
+  },
+  {
+    id: "subway_dp4",
+    scene: "subway",
+    step: 4,
+    focus: "买票 | 考点：购票请求",
+    npc: "Where would you like to go?",
+    options: ["Is there a day pass that's cheaper?", "Actually, could you tell me where the museum is first?", "One ticket for the museum, please.", "A single ticket to the National Museum, please."],
+    answer: 3,
+    explain: "正确项完整自然——票种 + 目的地 + 礼貌标记三要素齐全。`a day pass that's cheaper`问了票价。`tell me where the museum is first`提的是别的需求。`One ticket for the museum, please`省略了 `to`，完整度不如正确项。"
+  },
+  {
+    id: "subway_dp5",
+    scene: "subway",
+    step: 5,
+    focus: "站内问换乘 | 考点：询问站内方位",
+    npc: "You're looking for the red line?",
+    options: ["Yes, please — where do I change for the red line?", "Is the red line usually less crowded?", "Actually, could you tell me the fare first?", "Actually, what time does the last train leave?"],
+    answer: 0,
+    explain: "正确项用 `where do I change for`——`change for` 是地铁换乘的固定说法。`the red line usually less crowded`问了客流。`tell me the fare first`问的也是票价之类的信息，不是换乘。`time does the last train leave`问的是末班车时间，与换乘无关。"
+  },
+  {
+    id: "subway_dp6",
+    scene: "subway",
+    step: 6,
+    focus: "闸机求助 | 考点：求助描述",
+    npc: "Sorry, this gate isn't working.",
+    options: ["How long will it be out of order?", "Actually, could someone let me through this one?", "Is there another gate that I can use instead?", "Is there another one that works?"],
+    answer: 2,
+    explain: "正确项完整自然——`another gate that I can use instead` 是站务场景的求助表达。`How long will it be out of order`问了维修时长。`someone let me through this one`提出了绕过检查的请求（不该提）。`another one that works`太简略，闸机员需要再问一次才明白。"
+  },
+  {
+    id: "subway_dp7",
+    scene: "subway",
+    step: 7,
+    focus: "末班车 | 考点：询问时间",
+    npc: "This is the last train on the central line tonight.",
+    options: ["Does the central line run on weekends too?", "What time does the last train leave, and is there a service after that?", "Actually, could you call me a taxi?", "Actually, could you tell me which platform I need?"],
+    answer: 1,
+    explain: "正确项完整提问，含时间与服务两个关键信息——问「有没有更晚的」比猜具体几点更实用。`the central line run on weekends too`问的是周末运营。`call me a taxi`提议打车，没问关键问题。`tell me which platform I need`问的是站台在哪，和「末班车之后还有没有车」不是一回事。"
+  },
+  {
+    id: "subway_dp8",
+    scene: "subway",
+    step: 8,
+    focus: "致谢 | 考点：致谢",
+    npc: "You're very welcome. Enjoy your evening.",
+    options: ["Could you tell me how to get back to the platform?", "I'm going to the museum, not the station.", "Thanks very much.", "Thanks so much for your help — have a good evening!"],
+    answer: 3,
+    explain: "正确项完整自然，且 `Thanks so much for your help` 点明了谢什么。`tell me how to get back to the`问了另一个问题。`I'm going to the museum, not the station`说了句带纠正意味的话。`Thanks very much`太简略，没接住 `Enjoy your evening` 的祝愿。"
+  },
+  {
+    id: "shop_dp1",
+    scene: "shop",
+    step: 1,
+    focus: "说明来意 | 考点：表达意图",
+    npc: "Hi! Can I help you find anything?",
+    options: ["Hi — I'd like to return this shirt, please.", "Could you tell me where the fitting rooms are?", "Actually, I'm looking for a birthday present.", "Hi, I bought this here last week."],
+    answer: 0,
+    explain: "正确项用 `I'd like to return` 表达意图最自然得体。`tell me where the fitting rooms are`问了另一个问题。`I'm looking for a birthday present`提了完全不同的需求。`bought this here last week`只说明「我上周在这买的」，没有说要退换什么，店员无法处理。"
+  },
+  {
+    id: "shop_dp2",
+    scene: "shop",
+    step: 2,
+    focus: "出示小票 | 考点：出示凭证",
+    npc: "Do you have a receipt for that?",
+    options: ["I'm afraid I've lost the receipt.", "Could you check whether the policy has changed?", "Here you go — I have the receipt and the card I paid with.", "Yes, I have it somewhere."],
+    answer: 2,
+    explain: "正确项主动出示小票和支付卡，是最周全的应答——退换货往往两样都要。`I'm afraid I've lost the receipt`承认没有小票，等于给自己找麻烦。`check whether the policy has changed`问了另一个问题。`have it somewhere`说「somewhere」，店员无法确认你手里到底有没有。"
+  },
+  {
+    id: "shop_dp3",
+    scene: "shop",
+    step: 3,
+    focus: "换码 | 考点：提出更换请求",
+    npc: "We can offer an exchange. What size would you like?",
+    options: ["Is there a return policy for online orders?", "I'd like to swap it for a large, if you have one in stock.", "Actually, I'd rather have a refund.", "A large, please."],
+    answer: 1,
+    explain: "正确项请求 + 条件（`if you have one in stock`），地道且给店员留了余地。`a return policy for online orders`问了另一个问题。`I'd rather have a refund`改成了另一种诉求。`A large, please`缺冠词（`a large`），句子不完整。"
+  },
+  {
+    id: "shop_dp4",
+    scene: "shop",
+    step: 4,
+    focus: "询问政策 | 考点：询问规则",
+    npc: "Would you like to exchange or receive a store credit?",
+    options: ["Is the store credit refundable as cash?", "Actually, could you hold the item and call me later?", "Store credit, please.", "What's the difference for me between the two?"],
+    answer: 3,
+    explain: "正确项用 `What's the difference for me between…` 询问差异，是真实决策场景需要的表达——顾客要权衡的是「换货要再跑一趟」还是「拿代金券以后再买」。`the store credit refundable as cash`问了另一个问题。`hold the item and call me later`提了别的要求。`Store credit, please`没询问就做了选择，放弃了信息。"
+  },
+  {
+    id: "shop_dp5",
+    scene: "shop",
+    step: 5,
+    focus: "询问价保 | 考点：询问差价",
+    npc: "The large is $12 more than the medium.",
+    options: ["Is there a price adjustment if I take it to the sale?", "Is the sale happening this weekend?", "Actually, could you hold the medium instead?", "Twelve dollars more, is it?"],
+    answer: 0,
+    explain: "正确项用条件句询问，是地道表达——真正想问的是「打折后能不能补差价」。`the sale happening this weekend`问了另一个问题。`hold the medium instead`改成了另一种选择。`Twelve dollars more, is it`只是复述价格，没问关键问题。"
+  },
+  {
+    id: "shop_dp6",
+    scene: "shop",
+    step: 6,
+    focus: "结账 | 考点：结账句式",
+    npc: "Would you like to pay now or with the exchange?",
+    options: ["Is there a discount for paying cash?", "Actually, could you hold the item until Friday?", "I'd like to pay now, please — and I'll take the exchange.", "I'll pay with the exchange."],
+    answer: 2,
+    explain: "正确项两件事一次说清，结构完整。`a discount for paying cash`问了另一个问题。`hold the item until Friday`提了别的要求。`I'll pay with the exchange`没说清是现在付还是之后付，店员还得追问。"
+  },
+  {
+    id: "shop_dp7",
+    scene: "shop",
+    step: 7,
+    focus: "领取凭证 | 考点：索取凭证",
+    npc: "Here are your items and the exchange receipt.",
+    options: ["Could you wrap this as a gift?", "Thank you — could I also have the original receipt for my records?", "Actually, could I exchange this for a different colour?", "Yes, give me the original receipt."],
+    answer: 1,
+    explain: "正确项用 `for my records` 说明用途，是完整地道的请求——退换货场景里顾客常需要留底。`wrap this as a gift`问了另一个问题。`exchange this for a different colour`提了新的诉求。`give me the original receipt`是祈使命令，很生硬。"
+  },
+  {
+    id: "shop_dp8",
+    scene: "shop",
+    step: 8,
+    focus: "离店 | 考点：致谢",
+    npc: "Thanks for shopping with us. Have a good day.",
+    options: ["Could you tell me your return policy in writing?", "Actually, could I exchange this for a different size?", "Thanks very much.", "Thank you — the staff were really helpful. Have a good day!"],
+    answer: 3,
+    explain: "正确项完整并给出具体评价——`the staff were really helpful` 让感谢有落点。`tell me your return policy in writing`问了另一个问题。`exchange this for a different size`提了新的诉求。`Thanks very much`太简略，没接住 `Have a good day` 的祝愿。"
+  },
+  {
+    id: "gate_dp1",
+    scene: "gate",
+    step: 1,
+    focus: "得知延误 | 考点：接受坏消息并提问",
+    npc: "I'm sorry to inform you that flight KA218 to Osaka has been delayed by three hours.",
+    options: ["I understand. What are my options for getting there today?", "Could you tell me which gate the flight departs from?", "Actually, could I fly on a different airline today?", "Three hours is a very long wait."],
+    answer: 0,
+    explain: "正确项先表示理解、再问可行方案，是成熟的应对方式——航空公司客服场景里，情绪化只会让对话更难推进。`tell me which gate the flight departs from`问了登机口。`fly on a different airline today`提了不同诉求。`Three hours is a very long wait`只是抱怨，没问任何可解决的问题。"
+  },
+  {
+    id: "gate_dp2",
+    scene: "gate",
+    step: 2,
+    focus: "要求改签 | 考点：提出改签请求",
+    npc: "We can move you to tomorrow morning's flight if you prefer.",
+    options: ["Is there a hotel near the airport for tonight?", "Actually, could you put me on a flight this afternoon?", "Could you move me to tomorrow morning, please?", "Yes, tomorrow morning is better for me."],
+    answer: 2,
+    explain: "正确项用 `Could you…please` 请求最得体，且点明了「我」这个主语——`move me to` 是航空客服的标准说法。`a hotel near the airport for tonight`问了住宿。`put me on a flight this afternoon`提了不同的诉求。`tomorrow morning is better for me`虽语法正确，但像在告知而非请求。"
+  },
+  {
+    id: "gate_dp3",
+    scene: "gate",
+    step: 3,
+    focus: "询问替代航班 | 考点：追问选项",
+    npc: "Tomorrow morning at 09:15 is the next departure.",
+    options: ["Is there a bus to the city from the airport?", "Are there any other options earlier than 09:15, or on another airline?", "Actually, could you put me on a later flight?", "OK, I will take that one."],
+    answer: 1,
+    explain: "正确项用 `Are there any other options…` 打开更多可能——处理延误的核心句式，能问出比客服主动推荐更多的选项。`a bus to the city from the airport`问了另一个问题。`put me on a later flight`提了不同诉求。`OK, I will take that one`直接接受，没争取。"
+  },
+  {
+    id: "gate_dp4",
+    scene: "gate",
+    step: 4,
+    focus: "争取补偿 | 考点：提出补偿要求",
+    npc: "As a delay of this length, we can offer a meal voucher.",
+    options: ["Could you tell me where to get the meal voucher?", "Actually, could you upgrade me to business class?", "A meal voucher is fine, thanks.", "Could I also get hotel accommodation and transport for the night?"],
+    answer: 3,
+    explain: "正确项用 `Could I also get…` 在已有方案上追加请求，是最地道的谈判句式——注意 `also` 明确表示「在此基础上再加」。`tell me where to get the meal voucher`问了兑换地点。`upgrade me to business class`提了升级诉求。`A meal voucher is fine, thanks`放弃争取。"
+  },
+  {
+    id: "gate_dp5",
+    scene: "gate",
+    step: 5,
+    focus: "确认细节 | 考点：核对信息",
+    npc: "Your new flight departs at 09:15 from gate 22.",
+    options: ["Let me confirm — 09:15 tomorrow, gate 22, and my baggage is checked through?", "Is there a lounge I could use while I wait?", "Actually, could you move me to a later flight instead?", "Yes, 09:15 from gate 22."],
+    answer: 0,
+    explain: "正确项复述全部关键信息并追问行李，是稳妥的专业做法——改签最容易出错的就是时间和行李。`a lounge I could use while I wait`问了另一个问题。`move me to a later flight instead`提了不同诉求。`09:15 from gate 22`只确认了时间，漏掉行李这个关键点。"
+  },
+  {
+    id: "gate_dp6",
+    scene: "gate",
+    step: 6,
+    focus: "行李安排 | 考点：确认行李处理",
+    npc: "Your checked bag will be transferred automatically.",
+    options: ["How long does baggage claim usually take?", "Actually, could you send my bag to my hotel instead?", "Great — and I'll collect it at baggage claim on arrival, not at the transfer desk?", "Good, it's automatic."],
+    answer: 2,
+    explain: "正确项完整复述并确认细节，是旅客应该做的核对——`at baggage claim` 是关键信息。`How long does baggage claim usually take`问了另一个问题。`send my bag to my hotel instead`提了不同诉求。`it's automatic`只确认没问清关键细节。"
+  },
+  {
+    id: "gate_dp7",
+    scene: "gate",
+    step: 7,
+    focus: "登机时间 | 考点：询问时间",
+    npc: "Boarding opens two hours before departure.",
+    options: ["Is there a duty-free shop near the gate?", "So boarding opens at 07:15 — should I go straight to security?", "Actually, could you hold my flight for an hour?", "Boarding opens at 07:15."],
+    answer: 1,
+    explain: "正确项复述时间并追问下一步，是最有用的问法。`a duty-free shop near the gate`问了另一个问题。`hold my flight for an hour`提了不同诉求。`Boarding opens at 07:15`只复述没追问，浪费了一个可以确认流程的机会。"
+  },
+  {
+    id: "gate_dp8",
+    scene: "gate",
+    step: 8,
+    focus: "结束 | 考点：致谢与收尾",
+    npc: "We're sorry again for the disruption. Here's your new boarding pass.",
+    options: ["Could you also print me a copy of the receipt?", "Actually, could you move me to the 11:00 flight?", "Thanks very much.", "Thanks for sorting that out so quickly — it's been a long day, but I appreciate the help."],
+    answer: 3,
+    explain: "正确项完整且符合真实情境的情绪节奏——一天被延误折腾，最后一句 `I appreciate the help` 才说得诚恳。`also print me a copy of the receipt`提出了新请求。`move me to the 11:00 flight`提了不同诉求。`Thanks very much`太简略，没接住对方的道歉。"
+  },
+  {
+    id: "gate_dp9",
+    scene: "gate",
+    step: 9,
+    focus: "追问改签费用 | 考点：询问附加条件",
+    npc: "I can move you to tomorrow's 09:15 flight. There is a change fee of 50 dollars.",
+    options: ["Does the change fee apply if the delay is on your side?", "Could you tell me where to get the meal voucher?", "Actually, could you upgrade me to business class?", "A meal voucher is fine, thanks."],
+    answer: 0,
+    explain: "正确项用 `Does…apply if…` 确认条款适用范围——因航空公司原因延误，往往可以主张免改签费，这是真实场景里的关键一问。`the change fee apply if the delay is on` 语法正确，但问的是「有没有别的航班」，没有触及费用这个真正的问题。A 转移话题，同样没问费用。D 语气生硬，且没了解规则就做决定。C 直接砍价在柜台通常无效，`make it lower` 也不合搭配（应为 `lower it`）。"
+  },
+  {
+    id: "gate_dp10",
+    scene: "gate",
+    step: 10,
+    focus: "行李直挂确认 | 考点：确认托运安排",
+    npc: "Would you like to collect your checked bag at Frankfurt, or have it checked through?",
+    options: ["How long does baggage claim usually take?", "Actually, could you send my bag to my hotel instead?", "Please check it through to Osaka — I'll collect it there.", "Yes, I'll take my bag at Frankfurt."],
+    answer: 2,
+    explain: "正确项用 `check it through to + 目的地` + `collect it there` 两句说清意图，是转机行李的标准表达。A 也说得通，但省略了「在哪里取」，客服还得追问一次。B 只说了不要在哪取，没说自己要怎么取，客服无从操作。D 语法正确，但否掉直挂后也没说清自己到底要怎样。"
+  },
+  {
+    id: "interview_dp1",
+    scene: "interview",
+    step: 1,
+    focus: "自我介绍 | 考点：结构化自我介绍",
+    npc: "Thanks for coming in. So, tell me a bit about yourself.",
+    options: ["I'm a data analyst with three years in retail; I currently own our weekly forecasting model.", "Could you tell me what the main responsibilities are?", "Actually, could we start with the team introduction?", "I am very good person and I always work hard."],
+    answer: 0,
+    explain: "正确项用「身份 + 经验年限 + 具体职责」三段式，是高效自我介绍的标准结构——面试官最想知道的是「你能做什么」。`tell me what the main responsibilities are`反问职责。`start with the team introduction`想跳过自我介绍。`am very good person and I always work`是中文母语者的典型负迁移（`very good person` 缺冠词），且空洞无证据。"
+  },
+  {
+    id: "interview_dp2",
+    scene: "interview",
+    step: 2,
+    focus: "离职原因 | 考点：专业地回答离职原因",
+    npc: "What made you decide to leave your current role?",
+    options: ["Could I ask what the team's biggest challenge is?", "Actually, I'd like to talk about my notice period.", "I've reached the limit of what I can learn in that role, and I want work where I own a full product.", "My boss is very difficult person."],
+    answer: 2,
+    explain: "正确项把动机落在成长与「完整负责一件事」上，是成熟的职业表达——既不贬低现雇主，又说明你为什么要来。`ask what the team's biggest challenge is`反问。`I'd like to talk about my notice period`急着谈离职时间，显得急。`My boss is very difficult person`抱怨雇主（还缺冠词），是最不该说的答案。"
+  },
+  {
+    id: "interview_dp3",
+    scene: "interview",
+    step: 3,
+    focus: "优势 | 考点：优势 + 证据",
+    npc: "What would you say is your main strength?",
+    options: ["Could you tell me what the biggest challenge here is?", "I'm good at turning messy data into something a non-technical stakeholder can act on.", "Actually, could we move on to the next question?", "My strength is that I am very hard working."],
+    answer: 1,
+    explain: "正确项具体说明了「做什么」与「对谁有价值」——`turn…into…` 和 `stakeholder` 都是职场高频词。`tell me what the biggest challenge here is`反问。`move on to the next question`想跳过问题。`My strength is that I am very hard`是没有证据的形容词堆砌。"
+  },
+  {
+    id: "interview_dp4",
+    scene: "interview",
+    step: 4,
+    focus: "缺点 | 考点：真实 + 改进",
+    npc: "And what about a weakness?",
+    options: ["Could I ask how you would rate my performance?", "Actually, I'd rather not answer that one.", "My weakness is I am a perfectionist sometimes.", "I used to take on too much at once; now I prioritise and say no early."],
+    answer: 3,
+    explain: "正确项承认真实问题、给出改进策略、并用 `now` 划出前后界限，是标准的高质量回答。`ask how you would rate my performance`反问评分。`I'd rather not answer that one`直接拒绝回答。`My weakness is I am a perfectionist sometimes`是「假缺点」模板——面试官听过一万次，会判为不真诚。"
+  },
+  {
+    id: "interview_dp5",
+    scene: "interview",
+    step: 5,
+    focus: "量化成就 | 考点：用数字说话",
+    npc: "Tell me about a project you're proud of.",
+    options: ["I rebuilt our churn model; within two quarters, churn dropped from 9% to 6%.", "Could you tell me which projects would be most relevant here?", "Actually, could I describe a smaller project instead?", "I did a project about the customers and it was very good."],
+    answer: 0,
+    explain: "正确项有具体动作（`rebuilt`）、明确时间（`within two quarters`）、可验证的结果（`from 9% to 6%`）。`tell me which projects would be most relevant`反问。`describe a smaller project instead`回避展示成果。`did a project about the customers and it`缺可验证的结果——面试官记住的是数字。"
+  },
+  {
+    id: "interview_dp6",
+    scene: "interview",
+    step: 6,
+    focus: "薪资预期 | 考点：讨论薪资",
+    npc: "What are your salary expectations?",
+    options: ["Could you tell me how the bonus structure works?", "Actually, I'd like to hear more about the team first.", "I've seen the band for this role is around X — I'm flexible depending on the overall package.", "I want to get more than my current salary."],
+    answer: 2,
+    explain: "正确项表明了解市场、带出区间、说明弹性（`the overall package` 是关键——谈薪谈的不只是数字），是稳妥的表达。`tell me how the bonus structure works`反问奖金。`I'd like to hear more about the team`回避了钱的问题。`want to get more than my current salary`只说方向没有信息量。"
+  },
+  {
+    id: "interview_dp7",
+    scene: "interview",
+    step: 7,
+    focus: "反问环节 | 考点：提出高质量问题",
+    npc: "That's everything from me — do you have any questions for us?",
+    options: ["Could you tell me what the office hours are?", "What does success look like in this role after the first six months?", "Actually, could we go back to my experience?", "No, I think that covers everything from me."],
+    answer: 1,
+    explain: "正确项问「成功标准」，展示对岗位的思考深度——`What does success look like…` 是面试反问的最高频优质句式。`tell me what the office hours are`问办公时间，偏个人利益。`go back to my experience`想回到自己的话题。`think that covers everything from me`放弃了提问机会，等于浪费了这一环。"
+  },
+  {
+    id: "interview_dp8",
+    scene: "interview",
+    step: 8,
+    focus: "收尾 | 考点：结束致谢",
+    npc: "We'll be in touch by next Friday. Thanks for your time today.",
+    options: ["Could you tell me when exactly I'll hear from you?", "Actually, could we set up a second interview now?", "Thank you very much, goodbye.", "Thank you for your time — I really enjoyed learning about the role. Have a good day."],
+    answer: 3,
+    explain: "正确项完整并有温度——`I enjoyed learning about the role` 显示你是来了解岗位而不是只想要 offer。`tell me when exactly I'll hear from you`追问时间，显得急。`set up a second interview now`想当场再约。`Thank you very much, goodbye`太简略，没接住 `Thanks for your time` 的收尾。"
+  },
+  {
+    id: "interview_dp9",
+    scene: "interview",
+    step: 9,
+    focus: "争取额外支持 | 考点：表达诉求并留退路",
+    npc: "Let me know if there's anything else you need before we close the call.",
+    options: ["Could you send me the reimbursement policy in writing, so I have it for my records?", "Could you tell me what the office hours are?", "Actually, I'd like to talk about my salary now.", "No, nothing else, thank you very much."],
+    answer: 0,
+    explain: "正确项用 `Could you…` 请求、并用 `so I have it for my records` 说明用途——两句话把「要什么」和「为什么要」都讲清，是职场沟通的标准做法。`nothing else, thank you very much` 过于简略。C 答非所问且语气生硬。D 是祈使命令（`You should…`），对客服说很不合适。"
+  },
+  {
+    id: "interview_dp10",
+    scene: "interview",
+    step: 10,
+    focus: "约定后续跟进 | 考点：确认下一步",
+    npc: "I'll email you the updated quote by end of day.",
+    options: ["Could you tell me when exactly I'll hear from you?", "Actually, could we set up a second interview now?", "Perfect — could you send it to my work address, and cc me on the invoice?", "Good. I will wait for your email then, thank you."],
+    answer: 2,
+    explain: "正确项先回应、再提出两个具体请求（发到哪个地址、抄送发票），是「推进任务」的标准表达。A/B 只回应不推进，没有确认具体交付方式。D 语气生硬（`I hope you send it soon` 暗含责备），而且没有确认任何事情。"
+  },
+  {
+    id: "meeting_dp1",
+    scene: "meeting",
+    step: 1,
+    focus: "开场 | 考点：结构化开场",
+    npc: "Right, let's move on to the quarterly results. Over to you.",
+    options: ["Thanks, Alex. I'll cover three things: last quarter's numbers, what drove them, and what we're doing next.", "Could you tell me which metric matters most to you?", "Actually, could we skip straight to the actions?", "Yes, I will talk about the numbers now."],
+    answer: 0,
+    explain: "正确项一句预告结构，让听众知道怎么听——`I'll cover three things` 是汇报开场的黄金句式。`tell me which metric matters most to you`反问。`skip straight to the actions`想跳过铺垫。`will talk about the numbers now`没有结构（听众不知道要听多久）。"
+  },
+  {
+    id: "meeting_dp2",
+    scene: "meeting",
+    step: 2,
+    focus: "过渡 | 考点：过渡信号词",
+    npc: "（翻页）So — where does that leave us?",
+    options: ["Could you remind me what the second driver was?", "Actually, could we go back to the revenue slide?", "Turning to why the numbers moved, there are two main drivers.", "Now I want to talk about the next part."],
+    answer: 2,
+    explain: "正确项用 `Turning to…`——专业的过渡信号词，并且预告「两个原因」让听众能跟上。`remind me what the second driver was`反问刚讲过的内容。`go back to the revenue slide`想翻回去。`Now I want to talk about the next`是随口一说，没有过渡功能。"
+  },
+  {
+    id: "meeting_dp3",
+    scene: "meeting",
+    step: 3,
+    focus: "被打断 | 考点：礼貌应对打断",
+    npc: "Sorry to jump in — can you explain that revenue drop on slide four?",
+    options: ["Could you hold that until I've finished the section?", "Sure, happy to — let me take that one now.", "Actually, could we go back to slide three?", "Yes, okay. Slide four, revenue, drop."],
+    answer: 1,
+    explain: "正确项立刻转向提问者，态度合作——`happy to` + `let me take that one now` 是英语应对打断的标准组合。`hold that until I've finished the section`是请求，语气偏硬。`go back to slide three`转移了话题。`okay. Slide four, revenue, drop`只是复述词，没真正回应。"
+  },
+  {
+    id: "meeting_dp4",
+    scene: "meeting",
+    step: 4,
+    focus: "尖锐提问 | 考点：承认局限",
+    npc: "Honestly, this forecast looks optimistic. How do you justify it?",
+    options: ["Could you tell me what a realistic forecast looks like?", "Actually, could we use last year's actuals instead?", "It is correct, trust me, the data is right.", "That's fair — it does assume no further churn. Here's how sensitive it is to that assumption."],
+    answer: 3,
+    explain: "正确项先认同对方质疑合理（`That's fair`），再承认假设（`it does assume…`），最后给出应对——三层递进，是处理尖锐提问的高分答案。`tell me what a realistic forecast looks like`反问。`use last year's actuals instead`提议换数据，是换话题不是回答。`correct, trust me, the data is right`硬顶。"
+  },
+  {
+    id: "meeting_dp5",
+    scene: "meeting",
+    step: 5,
+    focus: "不确定时 | 考点：模糊限定语",
+    npc: "Do you think customers will accept the new pricing?",
+    options: ["I think they probably will, though it depends on how we position it.", "Could you tell me what the sales team thinks?", "Actually, could we run a survey first?", "Yes they will accept, I am sure about it."],
+    answer: 0,
+    explain: "正确项用 `I think / probably / it depends on`——既给出判断又留有余地，是英语母语者回答不确定问题的典型方式（`hedging` 是职场英语核心技能）。`tell me what the sales team thinks`反问。`run a survey first`提议新工作，是拖延。`they will accept, I am sure about it`过于绝对，在管理层面前容易翻车。"
+  },
+  {
+    id: "meeting_dp6",
+    scene: "meeting",
+    step: 6,
+    focus: "承认不知道 | 考点：诚实的边界",
+    npc: "Do you know the churn rate for the SME segment specifically?",
+    options: ["Could you tell me who prepared this deck?", "Actually, could we skip this slide?", "I don't have that figure in front of me — I'll follow up after the meeting.", "I think it is around 4 percent, yes."],
+    answer: 2,
+    explain: "正确项诚实说明并承诺跟进时间，是专业底线——`I don't have that figure in front of me` 是职场英语里最有分量的诚实句式。`tell me who prepared this deck`反问制作人。`skip this slide`想跳过。`think it is around 4 percent, yes`猜测（数据问题上猜错代价很大）。"
+  },
+  {
+    id: "meeting_dp7",
+    scene: "meeting",
+    step: 7,
+    focus: "提出行动项 | 考点：明确行动与责任人",
+    npc: "So — what are we doing next?",
+    options: ["Could you tell me who's already assigned to this?", "Two things: Sarah takes the pricing page by Thursday, and I'll circulate the revised model on Monday.", "Actually, could we defer this to the next meeting?", "We will see later, maybe something."],
+    answer: 1,
+    explain: "正确项具体到人（Sarah / I）、到物（pricing page / revised model）、到时间（Thursday / Monday），是行动项的标准写法。`tell me who's already assigned to this`反问。`defer this to the next meeting`提议推迟，等于没推进。`will see later, maybe something`太模糊，没有负责人也没有时间。"
+  },
+  {
+    id: "meeting_dp8",
+    scene: "meeting",
+    step: 8,
+    focus: "总结 | 考点：收束要点",
+    npc: "Right. Anything else before we close?",
+    options: ["Could you tell me what the deadline for the pricing page is?", "Actually, could we schedule a follow-up meeting?", "No, nothing else, thanks very much.", "Just to recap: revenue down 3%, churn is the driver, and Sarah's pricing page lands Thursday."],
+    answer: 3,
+    explain: "正确项用 `Just to recap` 收束并重复三项要点，是高效会议的结尾——听众散会后记住的就是这三句。`tell me what the deadline for the pricing`问了刚说过的事。`schedule a follow-up meeting`提议另开会，等于没推进。`nothing else, thanks very much`只是结束动作，没做收束。"
+  },
+  {
+    id: "meeting_dp9",
+    scene: "meeting",
+    step: 9,
+    focus: "接受追问 | 考点：承认限制并给替代",
+    npc: "You mentioned the model is preliminary. Do you have a validated version yet?",
+    options: ["Not yet — the model is still preliminary, but I'll have a validated version by Friday.", "Could you tell me who prepared this deck?", "Actually, could we skip this slide?", "Yes, I have the final version, I can send it today."],
+    answer: 0,
+    explain: "正确项用 `Not yet` 直接回应是非问句（而不是绕开），再给出明确的时间承诺——`I'll have…by Friday` 是职场英语的标准承诺句式。B 语序错（`do not have…yet` 应在助动词后立刻否定，但这里缺 `I` 的位置尚可，问题在 `I will have it by Friday` 缺少将来时标记的完整结构）。`have the final version, I can send it today` 撒谎。D 是话轮功能错——对方问有没有、答的却是\"我不做这个\"，答非所问。"
+  },
+  {
+    id: "meeting_dp10",
+    scene: "meeting",
+    step: 10,
+    focus: "收束会议 | 考点：总结与确认",
+    npc: "That's all from me. Anything else before we wrap up?",
+    options: ["Could you tell me what the deadline for the pricing page is?", "Actually, could we schedule a follow-up meeting?", "One thing — let's confirm who's taking the pricing page by Thursday.", "No, I think that is everything, thank you."],
+    answer: 2,
+    explain: "正确项用 `One thing` 引出并落到具体行动项（谁做、周几前），是收尾会议的标准句式——既回应了对方，又推进了任务。A 答非所问（对方问有没有事要补充，答的却是要谈休假）。`think that is everything, thank you` 过于简略，且没确认关键行动项。C 语法正确，但答的是对演示的评价，没有推进任何事。"
+  },
+  {
+    id: "office_dp1",
+    scene: "office",
+    step: 1,
+    focus: "同事的请求 | 考点：接受请求",
+    npc: "Hey — are you free for a coffee? I've got a proposal due and I'm completely stuck.",
+    options: ["Sure, I've got a gap at 3 — what do you need to work through?", "Could you tell me what the proposal is about?", "Actually, could you send me the document first?", "No, I am very busy now."],
+    answer: 0,
+    explain: "正确项给出具体时间（`a gap at 3`）并追问需求（`what do you need to work through?`）——承诺明确又留了余地。`tell me what the proposal is about`反问。`send me the document first`先要文件，是先要资源不是先帮忙。`am very busy now`生硬回绝。"
+  },
+  {
+    id: "office_dp2",
+    scene: "office",
+    step: 2,
+    focus: "澄清范围 | 考点：确认任务细节",
+    npc: "Could you look over the whole proposal? It's about 30 pages.",
+    options: ["Could you tell me who else is reviewing it?", "Actually, could you split it into two halves?", "I can give it a proper read — would it help most if I focus on the financials?", "Yes, thirty pages I read all of it."],
+    answer: 2,
+    explain: "正确项先承诺投入，再引导优先级——`would it help most if…` 这种建设性提问是协作的核心，比单纯答「好」有价值得多。`tell me who else is reviewing it`反问。`split it into two halves`提议拆分，是先谈工作量。`thirty pages I read all of it`语序散乱。"
+  },
+  {
+    id: "office_dp3",
+    scene: "office",
+    step: 3,
+    focus: "拒绝 | 考点：礼貌拒绝",
+    npc: "Actually, could you also present it on Friday? I really can't do the talking.",
+    options: ["Could you tell me what the presentation is for?", "I'm afraid I can't present it — I'm already on another project that week.", "Actually, could we move Friday's meeting instead?", "No, I don't want to, no time for this."],
+    answer: 1,
+    explain: "正确项用 `I'm afraid` 缓冲、给理由、不归因对方——是英语中拒绝的标准结构，三个要素缺一不可。`tell me what the presentation is for`反问。`move Friday's meeting instead`提议改期，是另一个方案但没回应「能不能做」。`don't want to, no time for this`生硬回绝。"
+  },
+  {
+    id: "office_dp4",
+    scene: "office",
+    step: 4,
+    focus: "提供替代 | 考点：提出替代方案",
+    npc: "Any chance you could help with the numbers section?",
+    options: ["Could you tell me who built the model?", "Actually, could we just use last quarter's numbers?", "No I cannot do the numbers.", "I can't redo them, but I can sanity-check your assumptions if that helps."],
+    answer: 3,
+    explain: "正确项说清不能做什么，同时给出自己能做的部分——`sanity-check` 是职场英语里既专业又精准的词，是合作型拒绝，比直接拒绝更有价值。`tell me who built the model`反问。`just use last quarter's numbers`提议用旧数据，是另一个方向。`cannot do the numbers`直接回绝，不留任何余地。"
+  },
+  {
+    id: "office_dp5",
+    scene: "office",
+    step: 5,
+    focus: "向上沟通 | 考点：向上级提出问题",
+    npc: "My manager says we have to have this by tomorrow morning.",
+    options: ["If it's a hard deadline, could you let my manager know what's feasible? I'd rather set a realistic date than miss it.", "Could you tell me who set that deadline?", "Actually, could you take it off my desk for today?", "That's impossible, I have other work."],
+    answer: 0,
+    explain: "正确项把冲突转成「谁来沟通 + 为什么」，并给出建设性落点——这是真正管用的表达。`tell me who set that deadline`反问。`take it off my desk for today`想甩掉工作。`That's impossible, I have other work`制造对抗。"
+  },
+  {
+    id: "office_dp6",
+    scene: "office",
+    step: 6,
+    focus: "设边界 | 考点：明确拒绝的范围",
+    npc: "Are you sure you can't squeeze in an hour today?",
+    options: ["Could you tell me what else is on your plate?", "Actually, could we get someone else to take it on?", "Not today — I'm at capacity. Tomorrow afternoon I could make time.", "Yes, one hour, but after 6 pm."],
+    answer: 2,
+    explain: "正确项保持立场的同时给出替代时间，是「有边界的友好」——`I'm at capacity` 是职场英语里体面的说法。`tell me what else is on your plate`反问。`get someone else to take it on`把活推给第三方。`one hour, but after 6 pm`先答应又加条件，会被继续追问。"
+  },
+  {
+    id: "office_dp7",
+    scene: "office",
+    step: 7,
+    focus: "修复关系 | 考点：致谢与推进",
+    npc: "Thanks, I know you're slammed. I really appreciate it.",
+    options: ["Could you tell me what the deadline is for my part?", "Of course — let me know how it goes, and I'll check in with you tomorrow.", "Actually, could we do the same for you next time?", "No problem, no need to say thanks."],
+    answer: 1,
+    explain: "正确项接受致谢并主动跟进，是关系维护的收尾——`check in with you tomorrow` 体现持续关注。`tell me what the deadline is for my`反问。`the same for you next time`提了交换条件，破坏了人情。`problem, no need to say thanks`把话说死，反而显得生硬。"
+  },
+  {
+    id: "office_dp8",
+    scene: "office",
+    step: 8,
+    focus: "跟进 | 考点：主动跟进",
+    npc: "（第二天）Morning! Did you get a chance to look at the section?",
+    options: ["Could you tell me who else is reviewing this section?", "Actually, could you look at it instead of me?", "Yes, I did it last night, here the changes.", "Yes — I've left comments in the margin, mainly on the assumptions. Shall we run through it at 11?"],
+    answer: 3,
+    explain: "正确项说明做了什么（`left comments in the margin`）、留下可核查的痕迹、并提出具体下一步（`at 11`）。`tell me who else is reviewing this section`反问。`look at it instead of me`想甩回去。`did it last night, here the changes`简单交付——合理但没有留下任何可追踪的东西。"
+  },
+];

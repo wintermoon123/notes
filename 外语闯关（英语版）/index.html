@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>英语情境闯关</title>
+<style>
+:root{
+  --ink:#2C2C2A; --dark:#5F5E5A; --cream:#F1EFE8; --paper:#FAF8F2;
+  --amber:#FAC775; --orange:#D85A30; --blue:#378ADD; --red:#A32D2D;
+  --olive:#639922; --green:#EAF3DE; --light:#9FE1CB;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:"Segoe UI","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  background:var(--cream);color:var(--ink);font-size:14px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+img{image-rendering:pixelated}
+button{font-family:inherit;cursor:pointer}
+.hide{display:none!important}
+
+/* ============ 通用像素组件 ============ */
+.pbox{background:var(--paper);border:3px solid var(--ink);padding:16px 18px}
+.pbtn{
+  font-size:13px;font-weight:500;padding:10px 22px;background:var(--blue);color:#fff;
+  border:2px solid var(--ink);box-shadow:3px 3px 0 var(--ink);transition:.12s;
+}
+.pbtn:hover:not(:disabled){transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink)}
+.pbtn:active:not(:disabled){transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.pbtn:disabled{background:var(--dark);cursor:not-allowed}
+.pbtn.ghost{background:var(--paper);color:var(--ink)}
+.pbtn.ghost:hover:not(:disabled){background:var(--green)}
+.pbtn.amber{background:var(--orange)}
+.pbtn.olive{background:var(--olive)}
+
+/* ============ 顶栏 ============ */
+#topbar{
+  position:relative;z-index:50;background:var(--cream);
+  border-bottom:3px solid var(--ink);padding:10px 16px;
+  display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+}
+#topbar .logo{font-size:14px;font-weight:500;letter-spacing:.5px;white-space:nowrap}
+#topbar .spacer{flex:1}
+.tbtn{
+  font-size:12px;padding:6px 12px;background:var(--paper);
+  border:2px solid var(--ink);color:var(--ink);
+}
+.tbtn:hover{background:var(--green)}
+.tbtn.on{background:var(--ink);color:var(--cream)}
+
+/* ============ 主页 ============ */
+#home{max-width:1080px;margin:0 auto;padding:26px 16px 60px}
+.hero{margin-bottom:26px}
+.hero h1{font-size:26px;font-weight:500;margin-bottom:8px;letter-spacing:.5px}
+.hero p{color:var(--dark);font-size:13px;max-width:640px}
+.stats{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0 22px}
+.stat{background:var(--paper);border:2px solid var(--ink);padding:8px 14px;font-size:12px}
+.stat b{font-size:17px;font-weight:500;display:block}
+.section-title{
+  font-size:13px;font-weight:500;margin:22px 0 10px;
+  display:flex;align-items:center;gap:8px;
+}
+.section-title::after{content:'';flex:1;height:2px;background:var(--dark);opacity:.35}
+
+.scene-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.card{
+  background:var(--paper);border:3px solid var(--ink);cursor:pointer;
+  transition:.15s;overflow:hidden;position:relative;
+}
+.card:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--ink)}
+.card .thumb{height:112px;overflow:hidden;border-bottom:3px solid var(--ink);position:relative;background:var(--cream)}
+.card .thumb img{width:100%;height:100%;object-fit:cover;object-position:center 42%;transform:scale(1.06)}
+.card .cat{
+  position:absolute;top:7px;left:7px;background:var(--ink);color:var(--cream);
+  font-size:10px;padding:3px 8px;
+}
+.card .body{padding:11px 13px}
+.card h3{font-size:14px;font-weight:500;margin-bottom:4px}
+.card .goal{font-size:11.5px;color:var(--dark);line-height:1.55;min-height:36px}
+.card .meta{display:flex;gap:8px;align-items:center;margin-top:9px;flex-wrap:wrap}
+.badge{font-size:10px;padding:2px 7px;border:1px solid var(--dark);color:var(--dark)}
+.badge.ok{background:var(--green);border-color:var(--olive);color:var(--olive)}
+.badge.part{background:#FAEEDA;border-color:var(--amber);color:#854F0B}
+.badge.lock{border-color:var(--dark);color:var(--dark)}
+.card .pminibar{height:5px;background:var(--cream);border:1px solid var(--dark);margin-top:8px}
+.card .pminibar i{display:block;height:100%;background:var(--olive)}
+
+/* ============ 游戏页 ============ */
+#play{max-width:1080px;margin:0 auto;padding:16px 16px 70px}
+.hud{
+  background:var(--paper);border:3px solid var(--ink);padding:11px 14px;margin-bottom:13px;
+}
+.hud-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.hud .goalbox{flex:1;min-width:220px}
+.hud .goalbox .lbl{font-size:10.5px;color:var(--orange);font-weight:500}
+.hud .goalbox .goal{font-size:12.5px;color:var(--dark)}
+.bar-wrap{
+  flex:1.6;min-width:260px;height:24px;background:var(--cream);
+  border:2px solid var(--ink);position:relative;
+}
+.bar-fill{height:100%;background:var(--olive);transition:width .45s ease;position:relative;overflow:hidden}
+.bar-fill::after{
+  content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(90deg,transparent 0 7px,rgba(0,0,0,.14) 7px 8px);
+}
+.bar-fill.warn{background:var(--amber)}
+.bar-fill.fail{background:var(--red)}
+.bar-mark{position:absolute;top:-3px;bottom:-3px;width:3px;background:var(--red)}
+.bar-tick{position:absolute;top:0;bottom:0;width:2px;background:rgba(44,44,42,.3)}
+.bar-tick span{
+  position:absolute;top:-15px;left:50%;transform:translateX(-50%);
+  font-size:9.5px;color:var(--dark);white-space:nowrap;
+}
+.bar-tick.mark span{color:var(--red);font-weight:500}
+.pct{font-size:15px;font-weight:500;min-width:52px;text-align:right}
+.stepdots{display:flex;gap:5px;margin-top:9px;flex-wrap:wrap;align-items:center}
+.stepdots i{
+  width:14px;height:14px;border:2px solid var(--dark);display:block;background:var(--cream);
+}
+.stepdots i.ok{background:var(--olive);border-color:var(--olive)}
+.stepdots i.no{background:var(--red);border-color:var(--red)}
+.stepdots i.now{background:var(--amber);border-color:var(--ink)}
+
+.stage{
+  position:relative;border:3px solid var(--ink);overflow:hidden;
+  background:var(--cream);margin-top:14px;aspect-ratio:16/9;
+  max-height:52vh;
+}
+.stage .bg{width:100%;height:100%;object-fit:cover;object-position:center 38%}
+.stage .tag{
+  position:absolute;left:0;top:0;background:var(--ink);color:var(--cream);
+  font-size:11px;padding:5px 11px;z-index:2;
+}
+.stage .npcmeta{
+  position:absolute;right:0;top:0;background:var(--orange);color:#fff;
+  font-size:11px;padding:5px 11px;z-index:2;
+}
+.bubble{
+  position:absolute;left:16px;top:44px;max-width:56%;background:var(--paper);
+  border:3px solid var(--ink);padding:11px 14px;font-size:15px;line-height:1.55;
+  box-shadow:4px 4px 0 rgba(44,44,42,.22);
+}
+.bubble .who{font-size:11px;color:var(--orange);font-weight:500;margin-bottom:4px}
+.npc{
+  position:absolute;bottom:0;right:12px;height:210px;object-fit:contain;
+  object-position:bottom right;
+  filter:drop-shadow(3px 3px 0 rgba(44,44,42,.3));
+  animation:bob 3.2s ease-in-out infinite;
+}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+
+.qblock{margin-top:13px;background:var(--paper);border:3px solid var(--ink);padding:15px 17px}
+.qblock .focus{
+  font-size:11px;color:var(--orange);font-weight:500;margin-bottom:10px;
+  display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;
+}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{
+  display:flex;align-items:flex-start;gap:11px;padding:11px 13px;
+  background:var(--cream);border:2px solid var(--dark);font-size:13.5px;line-height:1.55;
+  cursor:pointer;transition:.13s;text-align:left;width:100%;
+}
+.opt:hover:not(.done){background:var(--green);transform:translateX(4px)}
+.opt .k{font-weight:500;color:var(--orange);flex-shrink:0;min-width:16px}
+.opt.right{background:var(--green);border-color:var(--olive);border-width:3px}
+.opt.right .k{color:var(--olive)}
+.opt.wrong{background:#F7C1C1;border-color:var(--red);border-width:3px}
+.opt.wrong .k{color:var(--red)}
+.opt .mark{margin-left:auto;font-weight:500;flex-shrink:0}
+.opt.right .mark{color:var(--olive)}
+.opt.wrong .mark{color:var(--red)}
+.opt.dim{opacity:.5}
+
+.explain{
+  margin-top:13px;background:var(--cream);border-left:5px solid var(--orange);
+  padding:13px 15px;font-size:13px;line-height:1.85;
+}
+.explain h4{font-size:12px;font-weight:500;margin-bottom:6px;color:var(--orange)}
+.explain code{
+  background:var(--paper);padding:1px 5px;border:1px solid var(--dark);font-size:12px;
+  font-family:ui-monospace,Consolas,monospace;
+}
+.explain>div{margin-bottom:5px}
+.explain>div:last-child{margin-bottom:0}
+.explain .ex-ok{color:var(--olive);font-weight:500}
+.explain .ex-bad{color:var(--ink)}
+.explain .ex-bad::first-letter{color:var(--red)}
+.explain .ex-bad{color:var(--ink)}
+.explain .ex-bad b{color:var(--red)}
+.nextrow{margin-top:14px;display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
+
+/* ============ 结算页 ============ */
+#result{max-width:720px;margin:0 auto;padding:26px 16px 60px}
+.result-box{background:var(--paper);border:3px solid var(--ink);padding:26px 28px;text-align:center}
+.result-box .big{font-size:44px;font-weight:500;line-height:1.1;margin-bottom:6px}
+.result-box .verdict{font-size:16px;margin-bottom:6px}
+.result-box .sub{font-size:13px;color:var(--dark);margin-bottom:20px}
+.result-bar{margin:18px auto;max-width:460px}
+.npc-comment{
+  display:flex;gap:14px;align-items:flex-start;text-align:left;
+  background:var(--cream);border:2px solid var(--dark);padding:13px 15px;margin:18px 0;
+}
+.npc-comment img{height:96px;flex-shrink:0}
+.npc-comment .txt{font-size:13px;line-height:1.75}
+.npc-comment .txt .en{font-size:13.5px}
+.npc-comment .txt .zh{font-size:12px;color:var(--dark);margin-top:6px}
+.errlist{text-align:left;margin:16px 0}
+.errlist h4{font-size:12px;font-weight:500;margin-bottom:8px;color:var(--red)}
+.errrow{
+  background:var(--cream);border-left:4px solid var(--red);padding:9px 12px;
+  margin-bottom:7px;font-size:12.5px;line-height:1.7;
+}
+.errrow .q{font-weight:500;margin-bottom:3px}
+.errrow .mine{color:var(--red)}
+.errrow .right{color:var(--olive)}
+
+/* ============ 生词本 ============ */
+#vocab{max-width:800px;margin:0 auto;padding:26px 16px 60px}
+.vrow{
+  background:var(--paper);border:2px solid var(--ink);padding:12px 14px;margin-bottom:10px;
+}
+.vrow .w{font-size:15px;font-weight:500;margin-bottom:3px}
+.vrow .c{font-size:12px;color:var(--dark)}
+.vrow .ex{font-size:12px;margin-top:6px;padding-top:6px;border-top:1px dashed var(--dark);opacity:.85}
+
+/* ============ 弹层 ============ */
+#modal{
+  position:fixed;inset:0;background:rgba(44,44,42,.55);z-index:100;
+  display:flex;align-items:center;justify-content:center;padding:20px;
+}
+#modal .mbox{
+  background:var(--paper);border:3px solid var(--ink);max-width:460px;width:100%;
+  padding:22px 24px;max-height:84vh;overflow:auto;
+}
+#modal h3{font-size:15px;font-weight:500;margin-bottom:10px}
+#modal p{font-size:13px;line-height:1.8;color:var(--dark)}
+#modal .mrow{margin-top:18px;display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
+
+#toast{
+  position:fixed;left:50%;bottom:26px;transform:translateX(-50%);
+  background:var(--ink);color:var(--cream);padding:10px 18px;font-size:12.5px;
+  border:2px solid var(--ink);z-index:200;opacity:0;transition:.25s;pointer-events:none;
+}
+#toast.show{opacity:1}
+
+footer{text-align:center;padding:26px 16px;font-size:11px;color:var(--dark);line-height:1.9}
+
+/* ============ 响应式 ============ */
+@media(max-width:720px){
+  .hero h1{font-size:21px}
+  .stage{max-height:40vh}
+  .bubble{max-width:66%;font-size:13px;padding:8px 10px;left:10px;top:38px}
+  .bubble .who{font-size:10px;margin-bottom:2px}
+  .npc{height:130px;right:6px;bottom:-4px}
+  .stage .tag,.stage .npcmeta{font-size:10px;padding:4px 8px}
+  .opt{font-size:13px;padding:10px 11px}
+  .result-box{padding:20px 18px}
+  .result-box .big{font-size:34px}
+  #topbar{gap:9px;padding:9px 12px}
+  .topbar .logo{font-size:13px}
+  .qblock{padding:13px 13px}
+}
+@media(max-width:420px){
+  .scene-grid{grid-template-columns:1fr}
+  .stage{max-height:34vh}
+}
+</style>
+</head>
+<body>
+
+<div id="topbar" class="hide">
+  <span class="logo">英语情境闯关</span>
+  <button class="tbtn" onclick="goHome()">← 关卡</button>
+  <button class="tbtn" onclick="openVocab()">生词本</button>
+  <span class="spacer"></span>
+  <button class="tbtn" id="btnAi" onclick="toggleAi()">AI 点评：关</button>
+</div>
+
+<!-- ========== 主页 ========== -->
+<div id="home">
+  <div class="hero">
+    <h1>英语情境闯关</h1>
+    <p>你不是在背单词，你是在用英语把一件事办成。每个情境给你一个明确目标，一路靠英语表达推进——进度条就是任务完成度，不是分数。</p>
+  </div>
+  <div class="stats" id="stats"></div>
+  <div class="section-title">十个真实情境</div>
+  <div class="scene-grid" id="sceneGrid"></div>
+</div>
+
+<!-- ========== 游戏页 ========== -->
+<div id="play" class="hide">
+  <div class="hud">
+    <div class="hud-row">
+      <div class="goalbox">
+        <div class="lbl">本关目标</div>
+        <div class="goal" id="hudGoal"></div>
+      </div>
+      <div class="bar-wrap">
+        <div class="bar-fill" id="bar"></div>
+        <div class="bar-tick" style="left:30%"><span>30%</span></div>
+        <div class="bar-tick" style="left:60%"><span>60%</span></div>
+        <div class="bar-tick mark" id="passTick"><span>90% 达成</span></div>
+      </div>
+      <div class="pct" id="pct">20%</div>
+    </div>
+    <div class="stepdots" id="stepdots"></div>
+    <div style="font-size:10px;color:var(--dark);margin-top:5px">决策点进度：绿=答对 · 红=答错 · 橙=当前</div>
+  </div>
+
+  <div class="stage">
+    <img class="bg" id="stageBg" src="" alt="">
+    <div class="tag" id="stageTag"></div>
+    <div class="npcmeta" id="stageNpc"></div>
+    <div class="bubble"><div class="who" id="bubbleWho"></div><div id="bubbleTxt"></div></div>
+    <img class="npc" id="stageNpcImg" src="" alt="">
+  </div>
+
+  <div class="qblock">
+    <div class="focus"><span id="focusTxt"></span><span id="focusStep"></span></div>
+    <div class="opts" id="opts"></div>
+    <div class="explain hide" id="explain"><h4>解析</h4><div id="explainBody"></div></div>
+    <div class="nextrow hide" id="nextRow">
+      <button class="pbtn ghost" id="btnRetry">重打本关</button>
+      <button class="pbtn" id="btnNext">下一关</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 结算页 ========== -->
+<div id="result" class="hide">
+  <div class="result-box">
+    <div class="big" id="resPct"></div>
+    <div class="verdict" id="resVerdict"></div>
+    <div class="sub" id="resSub"></div>
+    <div class="result-bar">
+      <div class="bar-wrap">
+        <div class="bar-fill" id="resBar"></div>
+        <div class="bar-tick mark" style="left:90%"><span>90% 达成</span></div>
+      </div>
+    </div>
+    <div class="npc-comment" id="resComment">
+      <img id="resNpcImg" src="" alt="">
+      <div class="txt">
+        <div class="en" id="resCommentEn"></div>
+        <div class="zh" id="resCommentZh"></div>
+      </div>
+    </div>
+    <div class="errlist hide" id="errList"><h4>这几题没答对</h4><div id="errRows"></div></div>
+    <div class="nextrow" style="justify-content:center;margin-top:20px">
+      <button class="pbtn ghost" onclick="goHome()">← 关卡列表</button>
+      <button class="pbtn ghost" id="btnRetry2">再试一次</button>
+      <button class="pbtn" id="btnNext2">下一关 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 生词本 ========== -->
+<div id="vocab" class="hide">
+  <div class="section-title" style="margin-top:0">生词本</div>
+  <div id="vocabList"></div>
+  <div class="nextrow">
+    <button class="pbtn ghost" onclick="closeVocab()">返回</button>
+  </div>
+</div>
+
+<div id="modal" class="hide"><div class="mbox" id="mbox"></div></div>
+<div id="toast"></div>
+
+<script src="data/questions.js"></script>
+<script src="data/scenes.js"></script>
+<script>
+/* ================= 状态 ================= */
+const Q = window.QUESTIONS, S = window.SCENES;
+const STORE = { progress:"lexi_progress", vocab:"lexi_vocab", ai:"lexi_ai" };
+
+let G = {
+  scene:null, qs:[], idx:0, progress:0, wrong:[], answered:false,
+  aiOn:false, aiCalls:0
+};
+
+function lsGet(k, def){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):def; }catch(e){ return def; } }
+function lsSet(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+
+let progressMap = lsGet(STORE.progress, {});
+let vocabMap = lsGet(STORE.vocab, {});
+G.aiOn = lsGet(STORE.ai, false);
+
+function saveProgress(){ lsSet(STORE.progress, progressMap); }
+function saveVocab(){ lsSet(STORE.vocab, vocabMap); }
+function saveAi(){ lsSet(STORE.ai, G.aiOn); }
+
+/* ================= 主页 ================= */
+function catName(c){ return {dining:"用餐", travel:"旅游", work:"工作"}[c]||c; }
+/* 所有关卡均开放：按学习者自选顺序自由挑战 */
+function unlocked(){ return true; }
+
+function renderHome(){
+  const total = S.length;
+  const done = S.filter(s=>(progressMap[s.id]||0)>=s.passAt).length;
+  const best = S.reduce((a,s)=>Math.max(a,progressMap[s.id]||0),0);
+  const vc = Object.keys(vocabMap).length;
+  document.getElementById("stats").innerHTML =
+    `<div class="stat"><b>${done}/${total}</b>已通关情境</div>`+
+    `<div class="stat"><b>${best}%</b>最高进度</div>`+
+    `<div class="stat"><b>${vc}</b>生词条数</div>`+
+    `<div class="stat"><b>${Q.length}</b>道决策题</div>`;
+
+  document.getElementById("sceneGrid").innerHTML = S.map(s=>{
+    const p = progressMap[s.id]||0;
+    const ok = p>=s.passAt;
+    const badge = ok ? '<span class="badge ok">已通关</span>'
+      : p>0 ? '<span class="badge part">'+p+'%</span>'
+      : '<span class="badge">未开始</span>';
+    const diff = s.steps>8 ? '10 题' : '8 题';
+    return `<div class="card" onclick="startScene('${s.id}')">
+      <div class="thumb">
+        <img src="${s.scene}" alt="${s.name}" loading="lazy">
+        <span class="cat">${catName(s.category)}</span>
+      </div>
+      <div class="body">
+        <h3>${String(s.order).padStart(2,'0')} ${s.name}</h3>
+        <div class="goal">${s.goal}</div>
+        <div class="meta">${badge}<span class="badge">${diff} 决策点</span><span class="badge">${s.cefr}</span></div>
+        <div class="pminibar"><i style="width:${p}%"></i></div>
+      </div>
+    </div>`;
+  }).join("");
+}
+
+function goHome(){
+  hideAll(); renderHome();
+  document.getElementById("home").classList.remove("hide");
+  document.getElementById("topbar").classList.add("hide");
+  window.scrollTo(0,0);
+}
+function hideAll(){ ["home","play","result","vocab"].forEach(id=>document.getElementById(id).classList.add("hide")); }
+
+/* ================= 游戏 ================= */
+function startScene(id){
+  G.scene = S.find(s=>s.id===id);
+  G.qs = Q.filter(q=>q.scene===id).sort((a,b)=>a.step-b.step);
+  G.idx=0; G.progress=G.scene.startProgress; G.wrong=[]; G.answered=false;
+  hideAll();
+  document.getElementById("play").classList.remove("hide");
+  document.getElementById("topbar").classList.remove("hide");
+  document.getElementById("hudGoal").textContent = G.scene.goal;
+  document.getElementById("stageBg").src = G.scene.scene;
+  document.getElementById("stageTag").textContent = G.scene.name + " · " + G.scene.cefr;
+  document.getElementById("stageNpc").textContent = G.scene.npcName;
+  document.getElementById("stageNpcImg").src = G.scene.npc;
+  document.getElementById("bubbleWho").textContent = G.scene.npcName;
+  document.getElementById("passTick").style.left = G.scene.passAt+"%";
+  renderBar(); renderDots(); renderQ();
+  window.scrollTo(0,0);
+}
+
+function renderBar(){
+  const bar=document.getElementById("bar");
+  bar.style.width = G.progress+"%";
+  bar.className = "bar-fill" + (G.progress>=G.scene.passAt?"":(G.progress>=60?" warn":""));
+  document.getElementById("pct").textContent = G.progress+"%";
+}
+function renderDots(){
+  document.getElementById("stepdots").innerHTML = G.qs.map((q,i)=>{
+    let c="";
+    if(i<G.idx) c = G.wrong.includes(i)?"no":"ok";
+    else if(i===G.idx) c="now";
+    return "<i class='"+c+"'></i>";
+  }).join("");
+}
+function renderQ(){
+  G.answered=false;
+  const q=G.qs[G.idx];
+  document.getElementById("focusTxt").textContent = q.focus;
+  document.getElementById("focusStep").textContent =
+    `决策点 ${G.idx+1} / ${G.qs.length}`;
+  document.getElementById("bubbleTxt").textContent = q.npc;
+  document.getElementById("explain").classList.add("hide");
+  document.getElementById("nextRow").classList.add("hide");
+  document.getElementById("opts").innerHTML = q.options.map((o,i)=>
+    `<button class="opt" onclick="answer(${i})"><span class="k">${"ABCD"[i]}</span><span>${o}</span><span class="mark"></span></button>`
+  ).join("");
+}
+
+function answer(i){
+  if(G.answered) return;
+  G.answered=true;
+  const q=G.qs[G.idx];
+  const right = i===q.answer;
+  const nodes=document.querySelectorAll("#opts .opt");
+  nodes.forEach((n,k)=>{
+    n.classList.add("done");
+    if(k===q.answer){ n.classList.add("right"); n.querySelector(".mark").textContent="✓ 正确"; }
+    else if(k===i){ n.classList.add("wrong"); n.querySelector(".mark").textContent="✗"; }
+    else n.classList.add("dim");
+  });
+  if(right){
+    G.progress += G.scene.stepGain;
+    renderBar();
+  }else{
+    G.wrong.push(G.idx);
+    q.picked = q.options[i];
+    addVocab(q, q.options[i]);
+  }
+  // 解析
+  document.getElementById("explainBody").innerHTML = formatExplain(q.explain);
+  document.getElementById("explain").classList.remove("hide");
+  renderDots();
+  // 下一题或结算
+  const isLast = G.idx >= G.qs.length-1;
+  document.getElementById("nextRow").classList.remove("hide");
+  if(!isLast){
+    document.getElementById("btnNext").textContent = "下一题 →";
+    document.getElementById("btnNext").onclick = ()=>{ G.idx++; renderQ(); window.scrollTo(0,0); };
+  }else{
+    document.getElementById("btnNext").textContent = "查看结果";
+    document.getElementById("btnNext").onclick = finish;
+  }
+  window.scrollTo({top:document.body.scrollHeight, behavior:'smooth'});
+}
+
+/** 解析文本里把 `code` 渲染成等宽标签，段落按句号分行 */
+function formatExplain(txt){
+  // 1) 等宽标签化
+  let s = txt.replace(/`([^`]+)`/g,'<code>$1</code>');
+  // 2) 在"正确项"或"字母 + 中文"前断行，让每条点评独立成行
+  s = s.replace(/\s*(?=(正确项|[ABCD](?=\s)))/g, '\n');
+  // 3) 每行按首字着色：正确项绿色，干扰项红色
+  return s.split('\n').filter(x=>x.trim()).map(line=>{
+    const t = line.trim();
+    if(/^正确项/.test(t)) return '<div class="ex-ok">'+t+'</div>';
+    if(/^[ABCD]\s/.test(t))  return '<div class="ex-bad">'+t+'</div>';
+    return '<div>'+t+'</div>';
+  }).join('');
+}
+
+/* ================= 生词本 ================= */
+function addVocab(q, myAnswer){
+  const key = q.id;
+  if(vocabMap[key]) return;
+  vocabMap[key] = {
+    focus:q.focus, npc:q.npc,
+    right:q.options[q.answer], mine:myAnswer,
+    scene:G.scene.name, at:Date.now()
+  };
+  saveVocab();
+}
+function openVocab(){
+  hideAll();
+  document.getElementById("vocab").classList.remove("hide");
+  document.getElementById("topbar").classList.remove("hide");
+  const keys=Object.keys(vocabMap);
+  document.getElementById("vocabList").innerHTML = keys.length ? keys.map(k=>{
+    const v=vocabMap[k];
+    return `<div class="vrow">
+      <div class="w">${v.focus}</div>
+      <div class="c">情境：${v.scene}</div>
+      <div class="ex"><b>正确说法</b>　${v.right}</div>
+      <div class="ex" style="color:var(--red)"><b>你的选择</b>　${v.mine}</div>
+    </div>`;
+  }).join("") : `<div class="pbox" style="text-align:center;color:var(--dark)">
+      生词本还是空的。<br>答错的题目会自动收录到这里。
+    </div>`;
+  window.scrollTo(0,0);
+}
+function closeVocab(){ goHome(); }
+
+/* ================= 结算 ================= */
+function finish(){
+  const pass = G.progress >= G.scene.passAt;
+  // 记录最高进度
+  const prev = progressMap[G.scene.id]||0;
+  if(G.progress>prev) progressMap[G.scene.id]=G.progress;
+  saveProgress();
+
+  hideAll();
+  document.getElementById("result").classList.remove("hide");
+  document.getElementById("topbar").classList.remove("hide");
+
+  document.getElementById("resPct").textContent = G.progress+"%";
+  document.getElementById("resBar").style.width = G.progress+"%";
+  document.getElementById("resBar").className = "bar-fill"+(pass?"":" warn");
+  document.getElementById("resNpcImg").src = G.scene.npc;
+
+  const v = G.qs.length - G.wrong.length;
+  let verdict, sub;
+  if(G.progress>=100){ verdict="目标圆满完成"; sub="全部决策点一次做对——目标没有任何阻碍地达成。"; }
+  else if(pass){ verdict="任务完成，但有波折"; sub=`${v}/${G.qs.length} 个决策点一次做对。剩下的波折也走到了终点。`; }
+  else if(G.progress>=80){ verdict="还差一点"; sub=`${v}/${G.qs.length} 个决策点一次做对。目标没完成，但已经很接近了。`; }
+  else { verdict="任务失败"; sub=`${v}/${G.qs.length} 个决策点一次做对。这次没能把事情办成。`; }
+  document.getElementById("resVerdict").textContent=verdict;
+  document.getElementById("resSub").textContent=sub;
+
+  // 错题清单
+  const errs = [];
+  G.qs.forEach((q,i)=>{ if(G.wrong.includes(i)) errs.push({q, mine:q.picked}); });
+  if(errs.length){
+    document.getElementById("errList").classList.remove("hide");
+    document.getElementById("errRows").innerHTML = errs.map(e=>
+      `<div class="errrow">
+        <div class="q">${e.q.focus}</div>
+        <div style="margin-bottom:3px">情境台词：${e.q.npc}</div>
+        <div class="right">正确说法：${e.q.options[e.q.answer]}</div>
+        <div class="mine">你的选择：${e.mine||"—"}</div>
+      </div>`
+    ).join("");
+  } else {
+    document.getElementById("errList").classList.add("hide");
+  }
+
+  // NPC 点评（AI 或本地模板）
+  renderComment(pass);
+
+  // 按钮
+  const nextScene = S.find(s=>s.order===G.scene.order+1);
+  const bn2 = document.getElementById("btnNext2");
+  bn2.classList.toggle("hide", !nextScene);
+  bn2.textContent = nextScene ? (pass ? "下一关 →" : "继续下一关 →") : "回到关卡列表";
+  bn2.onclick = ()=>{ if(nextScene) startScene(nextScene.id); else goHome(); };
+  document.getElementById("btnRetry2").onclick = ()=>startScene(G.scene.id);
+  window.scrollTo(0,0);
+}
+
+/* ================= NPC 点评 ================= */
+const LOCAL_COMMENTS = {
+  100:{ en:"Perfect — you handled that exactly the way a local would. Every step landed.", zh:"全程都很稳，每一步的说法都像本地人。这关你已经过关了。"},
+  90:{ en:"Nicely done. We got there, even if it wasn't the smoothest route.", zh:"完成了，虽然中途绕了一点弯路。下次可以更直接。"},
+  80:{ en:"We didn't quite get there today. A couple of things landed differently than they needed to.", zh:"这次没能办成。有几个说法没能让对方按你的意思理解。"},
+  low:{ en:"That one got away from us. Let's take another run at it — the phrasing is the tricky part, not you.", zh:"这次没能办成。难的是措辞，不是你。再来一次。"}
+};
+
+async function renderComment(pass){
+  const c = pass ? (G.progress>=100?LOCAL_COMMENTS[100]:LOCAL_COMMENTS[90])
+                  : (G.progress>=80?LOCAL_COMMENTS[80]:LOCAL_COMMENTS.low);
+  document.getElementById("resCommentEn").textContent = c.en;
+  document.getElementById("resCommentZh").textContent = c.zh;
+  if(!G.aiOn) return;
+
+  // AI 点评：调用云服务，失败则保留本地文案
+  const box = document.getElementById("resComment");
+  const zh = document.getElementById("resCommentZh");
+  zh.textContent = "AI 正在生成教练点评…";
+  try{
+    const text = await callAI({
+      lang:"en",
+      task:"comment",
+      payload:{
+        scene:G.scene.name, goal:G.scene.goal, progress:G.progress,
+        passed:pass, wrong:G.wrong.length, total:G.qs.length
+      }
+    });
+    if(text){
+      const lines = text.split(/\n+/).filter(x=>x.trim());
+      const en = lines.filter(x=>/^[A-Za-z]/.test(x.trim())).join(" ");
+      const cn = lines.filter(x=>/^[一-龥]/.test(x.trim())).join(" ");
+      if(en) document.getElementById("resCommentEn").textContent = en;
+      if(cn) document.getElementById("resCommentZh").textContent = cn;
+    }
+  }catch(e){
+    zh.textContent = c.zh + "（AI 点评不可用，已用本地点评）";
+  }
+}
+
+/* ================= AI 增强层 ================= */
+async function callAI(payload){
+  G.aiCalls++;
+  const t = setTimeout(()=>{}, 8000);
+  try{
+    // 若项目已接入 WorkBuddy 云服务，这里替换为真实 SDK 调用
+    // 参考：cloud-service skill 的 LLM 接入方式
+    if(typeof WorkBuddyCloud==="undefined" || !window.CLOUD_CONFIG){
+      await new Promise((res,rej)=>setTimeout(()=>rej(new Error("no cloud config")),900));
+    }
+    const cfg = window.CLOUD_CONFIG;
+    const cloud = WorkBuddyCloud.createWorkBuddyCloud({
+      endpoint: cfg.endpoint, publishableKey: cfg.publishableKey
+    });
+    const models = await cloud.llm.models.list();
+    const m = models.find(x=>x.disabled!==true);
+    if(!m) throw new Error("no model");
+    let ans="";
+    for await (const chunk of cloud.llm.chat.completions.create({
+      model:m.id, stream:true, temperature:1, max_tokens:600,
+      messages:[
+        {role:"system",content:"You are a warm, concise English coach. Reply with exactly two lines: first an English sentence (or two) of encouragement and one specific tip, then a line in Chinese. No extra commentary."},
+        {role:"user",content:JSON.stringify(payload)}
+      ]
+    })){
+      const d=chunk.choices[0]?.delta?.content;
+      if(d) ans+=d;
+    }
+    return ans;
+  } finally { clearTimeout(t); }
+}
+
+function toggleAi(){
+  G.aiOn=!G.aiOn; saveAi();
+  const b=document.getElementById("btnAi");
+  b.textContent = "AI 点评："+(G.aiOn?"开":"关");
+  b.classList.toggle("on", G.aiOn);
+  toast(G.aiOn ? "已开启 AI 教练点评（每局 1 次调用）" : "已关闭 AI 点评，使用本地点评");
+}
+
+/* ================= 工具 ================= */
+function toast(msg){
+  const t=document.getElementById("toast");
+  t.textContent=msg; t.classList.add("show");
+  setTimeout(()=>t.classList.remove("show"),2400);
+}
+function showModal(html){
+  document.getElementById("mbox").innerHTML=html;
+  document.getElementById("modal").classList.remove("hide");
+}
+document.getElementById("modal").onclick=function(e){ if(e.target===this) this.classList.add("hide"); };
+
+/* ================= 启动 ================= */
+document.getElementById("btnAi").textContent = "AI 点评："+(G.aiOn?"开":"关");
+document.getElementById("btnAi").classList.toggle("on", G.aiOn);
+document.getElementById("btnRetry").onclick=()=>startScene(G.scene.id);
+document.getElementById("btnNext").onclick=()=>{};
+renderHome();
+document.getElementById("home").classList.remove("hide");
+</script>
+</body>
+</html>
