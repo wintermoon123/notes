@@ -4,9 +4,9 @@
 
 ### Part1 如何学习本课程
 
-1. [Vibe Coding](https://www.merriam-webster.com/dictionary/vibe coding)是什么？
+1. Vibe Coding是什么？
 
-[Vibe Coding](https://www.merriam-webster.com/dictionary/vibe coding)的说法出现于2025年2月2日。AI研究者Andrej Karpathy用它描述一种新的编程方式：通过自然语言告诉 AI 想要什么，观察运行结果，再继续对话和修改，而不必从头手写、理解和管理每一行代码。
+Vibe Coding的说法出现于2025年2月2日。AI研究者Andrej Karpathy用它描述一种新的编程方式：通过自然语言告诉 AI 想要什么，观察运行结果，再继续对话和修改，而不必从头手写、理解和管理每一行代码。
 
 1. 什么是产品工程师（product engineer）？
 
@@ -51,17 +51,11 @@ OPC（One-Person Company）：经营一门完整生意
 1. 根据教程做贪吃蛇小游戏
 
 提示词：
-
 帮我做一个贪吃蛇游戏
-
 用方向键控制蛇的移动
-
 吃到食物后蛇会变长，分数增加
-
 撞到墙壁或自己的身体就游戏结束
-
 要有开始和重新开始按钮
-
 界面要简洁好看
 
 网址：https://r19q9964zww1-d.space.zhipuaidemo.cn
@@ -70,10 +64,8 @@ OPC（One-Person Company）：经营一门完整生意
 
 在尝试做自己的小游戏的过程中，出于降低成本的考虑，我主要运用workbuddy，先描述需求，和语言学习（英语）有关的游戏，玩家可以体验真实情境，先让AI生成方案，通过几轮对话确认方案，然后让AI执行，做出demo。
 
-网址：
+网址：https://wbapp-y65hcs3ot5xf6jxanygot6.app.workbuddy.host/?sharecode=YN7JDSTZT2
 
-https://wbapp-y65hcs3ot5xf6jxanygot6.app.workbuddy.host/?sharecode=YN7JDSTZT2
-
-学习资料：[https://datawhalechina.github.io/easy-vibe/zh-cn/stage-1/learning-map/](https://datawhalechina.github.io/easy-vibe/zh-cn/stage-1/learning-map/)
-
-[https://datawhalechina.github.io/easy-vibe/zh-cn/stage-1/ai-capabilities-through-games/](https://datawhalechina.github.io/easy-vibe/zh-cn/stage-1/ai-capabilities-through-games/)
+学习资料
+https://datawhalechina.github.io/easy-vibe/zh-cn/stage-1/learning-map/
+https://datawhalechina.github.io/easy-vibe/zh-cn/stage-1/ai-capabilities-through-games/
